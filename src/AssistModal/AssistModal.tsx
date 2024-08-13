@@ -23,7 +23,7 @@ const AssistModal: FC<PropsWithChildren<AssistModalProps>> = ({ children, modalC
   return createPortal(
 
     <div className={mo.modalContainer}>
-        <button type='button' onClick={clickButton}>{'Open/Close'}</button>
+        <button className={mo.button} type='button' onClick={clickButton}>{'Open/Close'}</button>
         { children }
     </div>, modalRoot
   )

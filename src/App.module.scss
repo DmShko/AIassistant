@@ -4,13 +4,24 @@
   padding: 2rem;
   text-align: center;
 
-  
-
 }
 
 .container {
 
+  width: 100%;
+
+  .title {
+    height: 10px;
+  
+    margin: 0;
+  }
+  
+  .infoField {
+  
     height: 100px;
-    width: 100%;
+
     background-color: white;
+    
+  }
+
 }
