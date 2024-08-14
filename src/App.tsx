@@ -18,21 +18,35 @@ function App() {
   const assist = assistStore(state => state);
 
   useEffect(()=> {
-    if(assist.assistant_id) assist.addThread();
-  }, [assist.assistant_id])
+    if(contentToggle && assist.assistant_id === '') assist.addAssist();
+  }, [contentToggle])
+
+  // useEffect(()=> {
+  //   if(assist.assistant_id) assist.addThread();
+  // }, [assist.assistant_id])
 
   useEffect(()=> {
-    if(assist.thread_id) assist.addMessage(assist.question);
+    console.log(assist.question)
+    if(assist.thread_id && assist.question !== '') assist.addMessage(assist.question);
   }, [assist.thread_id])
 
   useEffect(()=> {
+   
     if(assist.message_id) assist.addReq();
   }, [assist.message_id])
 
   useEffect(()=> {
-    if(assist.run_id) {assist.getMessagesList();
-    assist.reset('message_id');}
+    
+    if(assist.run_id) assist.getMessagesList();
+
   }, [assist.run_id])
+
+  // useEffect(()=> {
+   
+  //   if(assist.retrieve_status === 'completed') 
+  //     assist.getMessagesList();
+      
+  // }, [assist.retrieve_status])
 
   const driveContent = () => {
    
@@ -52,9 +66,10 @@ function App() {
     },
     onSubmit: (values, { resetForm }) => {
   
-      assist.addAssist();
       assist.setQuestion(values.question);
-   
+      
+      if(assist.assistant_id) assist.addThread();
+
       resetForm();
 
     },
@@ -87,13 +102,12 @@ function App() {
                 {
                   assist.messagesList.map(element => 
                     {
-                      return <li key={nanoid()}>{element.content[element.content.length - 1].text.value}</li>
+                      return <li key={nanoid()}>{element.content[0].text.value}</li>
                     }
                   )
                 }
                 
               </ul>
-              <p>{assist.messagesList.toString()}</p>
             </div>
           </div>
         }

@@ -9,6 +9,7 @@ export interface Store {
     message_id: string
     run_id: string
     error: string
+    retrieve_status: string
     messagesList: any[]
     getMessagesList: Function
     reset: Function
@@ -17,4 +18,5 @@ export interface Store {
     addMessage: Function
     addReq: Function
     setQuestion: Function
+    runRetrieve: Function
 };

@@ -20,6 +20,7 @@ export const assistStore = create<Store>((set, get) => ({
    run_id: '',
    error: '',
    messagesList: [],
+   retrieve_status: '',
    setQuestion: (data: string) => set((state) => ({question: state.question = data})),
    reset: (data: string) => set(() => ({[data]: ''})),
    addAssist: async ()=> {
@@ -56,7 +57,7 @@ export const assistStore = create<Store>((set, get) => ({
   },
 
   addMessage: async (content: string)=> {
-
+ 
     await openai.beta.threads.messages.create(
         get().thread_id,
         { role: "user", 
@@ -81,7 +82,7 @@ export const assistStore = create<Store>((set, get) => ({
         set((state) => ({run_id: state.run_id = res.id}))
     
       ).catch(error =>
-    
+      
         set((state) => ({error: state.error = error}))
       );
   },
@@ -93,6 +94,21 @@ export const assistStore = create<Store>((set, get) => ({
     ).then( res => {
        
         set((state) => ({messagesList: state.messagesList = res.data}))
+      }
+      ).catch(error =>
+    
+        set((state) => ({error: state.error = error}))
+      );
+  },
+
+  runRetrieve: async ()=> {
+
+    await openai.beta.threads.runs.retrieve(
+        get().thread_id,
+        get().run_id,
+    ).then( res => {
+       
+        set((state) => ({retrieve_status: state.retrieve_status = res.status}))
       }
       ).catch(error =>
     
